@@ -7,7 +7,8 @@ Hardware requirements -
 2. Wireless Adapter (to broadcast our wifi signal)
 3. SD card (min 4gb to boot our firmware)
 4. SD card reader
-5. Powerbank (to properly use it as a travel router)
+5. usb cable (depending on your pi's power input setup)
+6. Powerbank (to properly use it as a travel router)
 
 Software requirements -
 
