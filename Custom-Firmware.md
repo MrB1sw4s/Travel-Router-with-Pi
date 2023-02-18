@@ -1,5 +1,6 @@
 So why a custom firmware??
-because we can - reconfigure router
+because we can 
+- reconfigure router
 - no need of post config processes 
 - can simplyfy upgrade process
 
@@ -104,230 +105,22 @@ $ touch ~/openwrt/files/etc/config/firewall
 <h3>now set up network</h3>
 $ nano ~/openwrt/files/etc/config/network
 
-config interface 'loopback'
-        option device 'lo'
-        option proto 'static'
-        option ipaddr '127.0.0.1'
-        option netmask '255.0.0.0'
-
-config globals 'globals'
-        option ula_prefix 'fd72:717b:f45e::/48'
-
-config device
-        option name 'br-lan'
-        option type 'bridge'
-        list ports 'eth0'
-
-config interface 'lan'
-        option device 'br-lan'
-        option proto 'static'
-        option ipaddr '10.13.37.10'  // i used my custiom static ip here.
-        option netmask '255.255.255.0'
-        option ip6assign '60'
-	option force_link '1'
-
-config interface 'wwan'
-	option proto 'dhcp'    
-	option peerdns '0'
-	option dns '1.1.1.1 8.8.8.8'
+see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/5dec14f3a8a47ee35241e912a873f76f8934e301/network-config
 	
-
 <h3>now set up firewall</h3>
 $ nano ~/openwrt/files/etc/config/firewall
 
-config defaults
-        option syn_flood        1
-        option input            ACCEPT
-        option output           ACCEPT
-        option forward          REJECT
-# Uncomment this line to disable ipv6 rules
-#       option disable_ipv6     1
-
-config zone
-        option name             lan
-        list   network          'lan'
-        option input            ACCEPT
-        option output           ACCEPT
-        option forward          ACCEPT
-
-config zone
-        option name             wan
-        list   network          'wan'
-        list   network          'wan6'
-        option input            ACCEPT
-        option output           ACCEPT
-        option forward          REJECT
-        option masq             1
-        option mtu_fix          1
-
-config forwarding
-        option src              lan
-        option dest             wan
-
-# We need to accept udp packets on port 68,
-# see https://dev.openwrt.org/ticket/4108
-config rule
-        option name             Allow-DHCP-Renew
-        option src              wan
-        option proto            udp
-        option dest_port        68
-        option target           ACCEPT
-        option family           ipv4
-
-# Allow IPv4 ping
-config rule
-        option name             Allow-Ping
-        option src              wan
-        option proto            icmp
-        option icmp_type        echo-request
-        option family           ipv4
-        option target           ACCEPT
-
-config rule
-        option name             Allow-IGMP
-        option src              wan
-        option proto            igmp
-        option family           ipv4
-        option target           ACCEPT
-
-# Allow DHCPv6 replies
-# see https://github.com/openwrt/openwrt/issues/5066
-config rule
-        option name             Allow-DHCPv6
-        option src              wan
-        option proto            udp
-        option dest_port        546
-        option family           ipv6
-        option target           ACCEPT
-
-config rule
-        option name             Allow-MLD
-        option src              wan
-        option proto            icmp
-        option src_ip           fe80::/10
-        list icmp_type          '130/0'
-        list icmp_type          '131/0'
-        list icmp_type          '132/0'
-        list icmp_type          '143/0'
-        option family           ipv6
-        option target           ACCEPT
-
-# Allow essential incoming IPv6 ICMP traffic
-config rule
-        option name             Allow-ICMPv6-Input
-        option src              wan
-        option proto    icmp
-        list icmp_type          echo-request
-        list icmp_type          echo-reply
-        list icmp_type          destination-unreachable
-        list icmp_type          packet-too-big
-        list icmp_type          time-exceeded
-        list icmp_type          bad-header
-        list icmp_type          unknown-header-type
-        list icmp_type          router-solicitation
-        list icmp_type          neighbour-solicitation
-        list icmp_type          router-advertisement
-        list icmp_type          neighbour-advertisement
-        option limit            1000/sec
-        option family           ipv6
-        option target           ACCEPT
-
-# Allow essential forwarded IPv6 ICMP traffic
-config rule
-        option name             Allow-ICMPv6-Forward
-        option src              wan
-        option dest             *
-        option proto            icmp
-        list icmp_type          echo-request
-        list icmp_type          echo-reply
-        list icmp_type          destination-unreachable
-        list icmp_type          packet-too-big
-        list icmp_type          time-exceeded
-        list icmp_type          bad-header
-        list icmp_type          unknown-header-type
-        option limit            1000/sec
-        option family           ipv6
-        option target           ACCEPT
-
-config rule
-        option name             Allow-IPSec-ESP
-        option src              wan
-        option dest             lan
-        option proto            esp
-        option target           ACCEPT
-
-config rule
-        option name             Allow-ISAKMP
-        option src              wan
-        option dest             lan
-        option dest_port        500
-        option proto            udp
-        option target           ACCEPT
-
+see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/da5bc22294812a1d15ab687ffbee2d050f8e9be8/firewall-config
 
 <h3>now set up dhcp</h3>
 $ nano ~/openwrt/files/etc/config/dhcp
 
-config dnsmasq
-        option domainneeded '1'
-        option boguspriv '1'
-        option filterwin2k '0'
-        option localise_queries '1'
-        option rebind_protection '1'
-        option rebind_localhost '1'
-        option local '/lan/'
-        option domain 'lan'
-        option expandhosts '1'
-        option nonegcache '0'
-        option authoritative '1'
-        option readethers '1'
-        option leasefile '/tmp/dhcp.leases'
-        option resolvfile '/tmp/resolv.conf.d/resolv.conf.auto'
-        option nonwildcard '1'
-        option localservice '1'
-        option ednspacket_max '1232'
-
-config dhcp 'lan'
-        option interface 'lan'
-        option start '100'
-        option limit '150'
-        option leasetime '12h'
-        option dhcpv4 'server'
-        option dhcpv6 'server'
-        option ra 'server'
-        option ra_slaac '1'
-        list ra_flags 'managed-config'
-        list ra_flags 'other-config'
-
-config dhcp 'wan'
-        option interface 'wan'
-        option ignore '1'
-
-config odhcpd 'odhcpd'
-        option maindhcp '0'
-        option leasefile '/tmp/hosts/odhcpd'
-        option leasetrigger '/usr/sbin/odhcpd-update'
-        option loglevel '4'
+see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/5a534876fc2e64b890cff12766ba07af90ee3f63/dhcp-config
 
 <h3>now set up wireless</h3>
 $ nano ~/openwrt/files/etc/config/wireless
 
-config wifi-device 'radio0'
-        option type 'mac80211'
-        option path 'platform/soc/3f300000.mmcnr/mmc_host/mmc1/mmc1:0001/mmc1:0001:1'
-        option channel '7'
-        option band '11g'
-        option htmode 'HT20'
-        option disabled '0'
-        option short_gi_40 '0'
-
-config wifi-iface 'default_radio0'
-        option device 'radio0'
-        option network 'lan'
-        option mode 'ap'
-        option ssid 'OpenWrt'
-        option encryption 'none'
-        
+see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/34fd681c818596192c89653efbffa42df3678c9a/wireless-config        
 
 <h3>now it's time to build the firmware</h3> 
 
