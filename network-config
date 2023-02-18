@@ -1,0 +1,26 @@
+config interface 'loopback'
+        option device 'lo'
+        option proto 'static'
+        option ipaddr '127.0.0.1'
+        option netmask '255.0.0.0'
+
+config globals 'globals'
+        option ula_prefix 'fd72:717b:f45e::/48'
+
+config device
+        option name 'br-lan'
+        option type 'bridge'
+        list ports 'eth0'
+
+config interface 'lan'
+        option device 'br-lan'
+        option proto 'static'
+        option ipaddr '10.13.37.10'  // i used my custiom static ip here.
+        option netmask '255.255.255.0'
+        option ip6assign '60'
+	option force_link '1'
+
+config interface 'wwan'
+	option proto 'dhcp'    
+	option peerdns '0'
+	option dns '1.1.1.1 8.8.8.8'
