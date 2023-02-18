@@ -1,4 +1,4 @@
-<h2>This is an ongoing project. I am trying to build a VPN server so that we can host our own VPS and there will e no 3rd party vpn provider.</h2>
+<h2>This is an ongoing project. I am trying to build a VPN server so that we can host our own VPS and there will be no 3rd party vpn provider.</h2>
 
 vpn setup
 
