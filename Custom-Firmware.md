@@ -12,36 +12,36 @@ Fire up your linux machine with atleast 25 gb of free space and ....
 
 clone the openwrt repository
 
-$ git clone https://git.openwrt.org/openwrt/openwrt.git 
+>$ git clone https://git.openwrt.org/openwrt/openwrt.git 
 
-$ cd openwrt
+>$ cd openwrt
 
 now we have to select the version we wil be building..
 
 for latest use the master branch
 
->to search branch 
+to search branch 
 
-$ git branch -a
+>$ git branch -a
 
 then search for tag branch
 
-$ git tag
+>$ git tag
 
 when we find our tag branch we will change to that branch using git chekout
 
-$ git checkout v2x.x.x
+>$ git checkout v2x.x.x
 
 now we are in our desired branch we need to take few more options in consideration.
 
 we have to update and install this repo. to do this we have to run two scripts
 
-$ ./scripts/feeds update -a
+>$ ./scripts/feeds update -a
 
 (needed g++ and libncurses5-dev to install. any other dependencies neededd based on the os should be installed 
 prior script install)
 
-$ ./scripts/feeds install -a
+>$ ./scripts/feeds install -a
 
 <h3>Now it's time to customize</h3>
 
@@ -49,7 +49,7 @@ we have to install a terminal gui program to easily add remove or change our cus
 
 first run make menuconfig
 
-$ make menuconfig
+>$ make menuconfig
 
 it will load after the process is done. after it's loaded, we have to choose and make changes
 Target build system & subsystem
@@ -131,13 +131,13 @@ save and exit and we will start our customization
 
 You can modify the file “banner” in “~/openwrt/package/base-files/files/etc” folder so that your image shows a custom pre-login message at boot time. FIGlet Linux utility can create ASCII art from the text using the command line. Simply install it, and create ASCII art using the commands below.
 
-$ sudo apt-get install figlet
+>$ sudo apt-get install figlet
 
-$ figlet "Surfer OS" > ~/banner.txt
+>$ figlet "Surfer OS" > ~/banner.txt
 
 If you want to enable UART (universal asynchronous receiver-transmitter, is one of the most used device-to-device communication protocols aka hardware communiation protocol) by default, you have to place your custom settings under /openwrt/target/linux/bcm27xx/image/config.txt 
 
-$ cd /openwrt/target/linux/bcm27xx/image/config.txt
+>$ cd /openwrt/target/linux/bcm27xx/image/config.txt
 
 place enable_uart=1 under placeyourcustomsettings
 
@@ -147,33 +147,33 @@ first we have to create a file under openwrt/etc/config. it will be as root dire
 
 make diretory under ~/openwrt/package/base-files/files/etc
 
-$ mkdir ~/openwrt/files/etc/config
+>$ mkdir ~/openwrt/files/etc/config
 
-$ touch ~/openwrt/files/etc/config/network
+>$ touch ~/openwrt/files/etc/config/network
 
-$ touch ~/openwrt/files/etc/config/dhcp
+>$ touch ~/openwrt/files/etc/config/dhcp
 
-$ touch ~/openwrt/files/etc/config/wireless
+>$ touch ~/openwrt/files/etc/config/wireless
 
-$ touch ~/openwrt/files/etc/config/firewall
+>$ touch ~/openwrt/files/etc/config/firewall
 
 <h3>now set up network</h3>
-$ nano ~/openwrt/files/etc/config/network
+>$ nano ~/openwrt/files/etc/config/network
 
 see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/5dec14f3a8a47ee35241e912a873f76f8934e301/network-config
 	
 <h3>now set up firewall</h3>
-$ nano ~/openwrt/files/etc/config/firewall
+>$ nano ~/openwrt/files/etc/config/firewall
 
 see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/da5bc22294812a1d15ab687ffbee2d050f8e9be8/firewall-config
 
 <h3>now set up dhcp</h3>
-$ nano ~/openwrt/files/etc/config/dhcp
+>$ nano ~/openwrt/files/etc/config/dhcp
 
 see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/5a534876fc2e64b890cff12766ba07af90ee3f63/dhcp-config
 
 <h3>now set up wireless</h3>
-$ nano ~/openwrt/files/etc/config/wireless
+>$ nano ~/openwrt/files/etc/config/wireless
 
 see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/34fd681c818596192c89653efbffa42df3678c9a/wireless-config        
 
@@ -181,11 +181,13 @@ see https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/34fd681c818596192c896
 
 If you try compiling OpenWrt on multiple cores and don't download all source files for all dependency packages it is very likely that your build will fail.
 
-$ make download
+>$ make download
 
 make sure enough space is available (min 25 gb)
 
-$ make (use make j(core+1) to fully use the cpu. like for 6 core cppu use make -j7. but download dependencies first.)
+>$ make 
+
+(use make j(core+1) to fully use the cpu. like for 6 core cppu use make -j7. but download dependencies first.)
 
 might take an hour on 1st time.
 
