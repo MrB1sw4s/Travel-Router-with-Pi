@@ -192,3 +192,5 @@ make sure enough space is available (min 25 gb)
 might take an hour on 1st time.
 
 if complete congrats!! the file will be under ~/openwrt/bin/targets/bcm27xx/bcm2710/
+
+let's go to hardware configuration.
