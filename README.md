@@ -1,20 +1,63 @@
-# Travel-Router-with-Pi
-A secure travel router using a raspberry pi and based on a custom OpenWrt firmware.
+# Travel Router with Raspberry Pi 3B+
 
-Hardware requirements -
+A portable, secure Wi-Fi router built using a custom OpenWRT firmware on a Raspberry Pi 3B+. Designed for travelers, researchers, and penetration testers needing secure, persistent connectivity over untrusted networks (hotel Wi-Fi, public hotspots, etc.).
 
-1. Raspberry Pi (any model with a inbuild wifi chip can be used)
-2. Wireless Adapter (to broadcast our wifi signal)
-3. SD card (min 4gb to boot our firmware)
-4. SD card reader
-5. usb cable (depending on your pi's power input setup)
-6. Powerbank (to properly use it as a travel router)
+---
 
-Software requirements -
+## 🔧 Key Features
 
-1. A linux machine. (can also use VM but ake sure it has min 25 gigs of space in home directory)
-2. A lot of internet data will be used. be sure to be on wifi.
+- ✅ **Custom-built OpenWRT firmware** (preconfigured)
+- ✅ **No manual post-boot setup** — flash and go
+- ✅ **Dual-interface Wi-Fi bridging** (one for uplink, one for broadcast)
+- 🔜 Planned: VPN client auto-connect, DNS filtering, captive portal bypass
 
-Steps >
+---
 
-custom-firmware > hardware-config > vpn config
+## 📦 Hardware Requirements
+
+- Raspberry Pi 3B+ (or any model with onboard Wi-Fi)
+- USB Wi-Fi dongle (for second interface)
+- 8GB+ microSD card
+- Power source (portable battery or adapter)
+
+---
+
+## ⚙️ Why Custom Firmware?
+
+OpenWRT allows us to:
+- Eliminate post-boot configuration steps
+- Persist all network rules across reboots
+- Reconfigure easily with version-controlled builds
+- Avoid command-line setup in the field
+
+---
+
+## 🛡️ Use Case: Public Wi-Fi Armor
+
+Connect the Pi to any public/hotel Wi-Fi (via wlan1), and rebroadcast a secure private network (via wlan0):
+- Safeguards against MITM attacks
+- Prevents browser-based captive portal leaks
+- Enables future VPN tunneling or DNS over HTTPS (DoH)
+
+---
+
+## 🚀 Setup Instructions
+
+[Check Setup Guide →](https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/main/processinbrief.md)
+
+---
+
+## 🔭 Future Additions (Planned)
+
+- WireGuard/OpenVPN auto-start with fallback
+- Simple firewall layer for outgoing filtering
+- DNS sinkhole + Pi-hole integration
+- Optional Web UI for control
+
+---
+
+## 👨‍💻 Author
+
+Soumyadip Biswas  
+Cybersecurity & Infrastructure Enthusiast  
+TCM Certified | THM Top 0.17% | HTB | PwnCollege  
