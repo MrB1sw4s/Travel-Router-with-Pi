@@ -4,7 +4,7 @@ A portable, secure Wi-Fi router built using a custom OpenWRT firmware on a Raspb
 
 ---
 
-## 🔧 Key Features
+## Key Features
 
 - **Custom-built OpenWRT firmware** (preconfigured)
 - **No manual post-boot setup** — flash and go
