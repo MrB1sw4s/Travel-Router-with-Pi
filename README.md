@@ -43,7 +43,7 @@ Connect the Pi to any public/hotel Wi-Fi (via wlan1), and rebroadcast a secure p
 
 ## Setup Instructions
 
-[Check Setup Guide →](https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/main/processinbrief.md)
+[Check Setup Guide →](https://github.com/MrB1sw4s/Travel-Router-with-Pi/blob/main/Custom-Firmware.md)
 
 ---
 
